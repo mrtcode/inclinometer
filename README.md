@@ -7,3 +7,7 @@ Uses Atmega328, LSM303DLH accelerometer and MAX485 transceivers for a long dista
 When turned on calibrates and starts sending inclination angle (0-180) over USART. Removes gravity vector from accelerometer data automatically.
 
 ![](https://mrtcode.github.io/inclinometer/diagram.png)
+
+## Output
+
+![](https://mrtcode.github.io/inclinometer/terminal.png)

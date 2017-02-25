@@ -34,13 +34,13 @@ void init_usart(void) {
 }
 
 void send_char(char data) {
-    while ( (UCSR0A & (1 << UDRE0)) == 0) {};
-      UDR0 = data;
+	while ( (UCSR0A & (1 << UDRE0)) == 0) {};
+	UDR0 = data;
 }
 
 void send_string(char* StringPtr) {
-   while (*StringPtr) 
-      send_char(*StringPtr++);
+	while (*StringPtr) 
+		send_char(*StringPtr++);
 }
 
 signed long get_signed(unsigned long d) {
@@ -80,8 +80,8 @@ void update_acc_data() {
 	}
 	
 	for(char j=0;j<3;j++) buf[j]/=10;
-	
-	acc_vector.x = buf[0];
+		
+		acc_vector.x = buf[0];
 	acc_vector.y = buf[1];
 	acc_vector.z = buf[2];	
 }
@@ -130,7 +130,7 @@ ISR(TIMER1_COMPA_vect)  {
 	acc_vector_v.x=acc_vector_v.x*180/32768;
 	acc_vector_v.y=acc_vector_v.y*180/32768;
 	acc_vector_v.z=acc_vector_v.z*180/32768;
-		
+	
 	send_string("A:");
 	ltoa(acc_vector_v.x, buf, 10);
 	send_string(buf);
@@ -141,7 +141,7 @@ ISR(TIMER1_COMPA_vect)  {
 	ltoa(acc_vector_v.z, buf, 10);
 	send_string(buf);
 	send_string("\r\n");
-		
+	
 	memset(&acc_vector_v, 0, sizeof(acc_vector_v));
 }
 
@@ -149,10 +149,10 @@ int main(void) {
 	char buf[64];
 	init_usart();
 	for(int i=0;i<20000;i++);
-	send_string("Starting..\r\n");
-    i2c_init();
+		send_string("Starting..\r\n");
+	i2c_init();
 	for(int i=0;i<20000;i++);
-	i2c_start_wait(0x30);
+		i2c_start_wait(0x30);
 
 	i2c_write(0x20);
 	i2c_write(0x27);
@@ -160,7 +160,7 @@ int main(void) {
 
 	i2c_start_wait(0x30);
 	i2c_write(0x23);
-    i2c_rep_start(0x30+I2C_READ);
+	i2c_rep_start(0x30+I2C_READ);
 	send_string("Configuring accelerometer..\r\n");
 	//Setting accelerometer parameters
 
@@ -175,10 +175,10 @@ int main(void) {
     sei(); // activating all interrupts
 
 	//timer overflow number = cpu freq / freq divider / required freq - 1
-	OCR1A   = 1249;
+    OCR1A   = 1249;
     TCCR1B |= ((1 << CS10) | (1 << CS11)); // setting cpu freq divider
 
-	while(1) {}
+    while(1) {}
 
-	return 0;
+    	return 0;
 }
